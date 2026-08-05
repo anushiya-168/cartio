@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 function ProductCard({ product }) {
   return (
-    <div style={{
+    <div className="hover-card"style={{
       position: 'relative',
       border: '2px solid var(--ink)',
       borderRadius: '6px',
@@ -10,7 +10,8 @@ function ProductCard({ product }) {
       backgroundColor: 'var(--paper-alt)',
       display: 'flex',
       flexDirection: 'column',
-      height: '100%'
+      height: '100%',
+      boxShadow: '0 3px 10px rgba(27,36,48,0.06)'
     }}>
       {/* punched hole */}
       <div style={{
@@ -24,12 +25,25 @@ function ProductCard({ product }) {
         border: '2px solid var(--ink)'
       }} />
 
+      <span className="price-tag" style={{
+        position: 'absolute',
+        top: '10px',
+        right: '10px',
+        fontSize: '0.6rem',
+        color: 'var(--cherry)',
+        backgroundColor: '#fce8e6',
+        padding: '0.2rem 0.5rem',
+        borderRadius: '3px',
+        textTransform: 'uppercase'
+      }}>
+        {product.category}
+      </span>
+
       <img
         src={product.image}
         alt={product.title}
         style={{ height: '150px', objectFit: 'contain', margin: '0.5rem 0 1rem' }}
       />
-
       <h3 style={{
         fontFamily: 'var(--font-body)',
         fontWeight: 600,
@@ -50,7 +64,7 @@ function ProductCard({ product }) {
         margin: '0.5rem 0 0.9rem'
       }} />
 
-      <Link to={`/product/${product.id}`} style={{
+      <Link to={`/product/${product.id}`} className="hover-btn" style={{
         display: 'block',
         textAlign: 'center',
         padding: '0.6rem',

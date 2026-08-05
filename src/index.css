@@ -34,3 +34,25 @@ button {
 .price-tag {
   font-family: var(--font-mono);
 }
+
+.hover-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(27, 36, 48, 0.12);
+}
+
+.hover-btn {
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.hover-btn:hover {
+  background-color: var(--marigold) !important;
+  color: var(--ink) !important;
+}
+
+.hover-btn:active {
+  transform: scale(0.97);
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import emailjs from '@emailjs/browser'
 
 function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart()
@@ -25,6 +26,8 @@ function Checkout() {
     return newErrors
   }
 
+  const [sending, setSending] = useState(false)
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const newErrors = validate()
@@ -32,9 +35,31 @@ function Checkout() {
       setErrors(newErrors)
       return
     }
-    setPlaced(true)
-    clearCart()
-    setTimeout(() => navigate('/'), 2500)
+
+    setSending(true)
+
+    const templateParams = {
+      to_name: form.name,
+      to_email: form.email,
+      order_total: cartTotal.toFixed(2),
+      shipping_address: form.address
+    }
+
+    emailjs
+      .send('service_aib4e7e', 'template_e6liqyb', templateParams, 'SBW4gdd2ztMg2eoUf')
+      .then(() => {
+        setSending(false)
+        setPlaced(true)
+        clearCart()
+        setTimeout(() => navigate('/'), 2500)
+      })
+      .catch((error) => {
+        console.error('Email failed to send:', error)
+        setSending(false)
+        setPlaced(true)
+        clearCart()
+        setTimeout(() => navigate('/'), 2500)
+      })
   }
 
   if (cartItems.length === 0 && !placed) {
@@ -101,6 +126,8 @@ function Checkout() {
 
         <button
           type="submit"
+          disabled={sending}
+          classname={sending ? '' : 'hover-btn'}
           style={{
             width: '100%',
             padding: '0.75rem',
@@ -109,10 +136,12 @@ function Checkout() {
             border: 'none',
             borderRadius: '4px',
             cursor: 'pointer',
-            fontSize: '1rem'
+            fontSize: '1rem',
+            opacity: sending ? 0.7:1
           }}
+             
         >
-          Place Order
+          {sending ? 'Placing Order...' : 'Place Order'}
         </button>
       </form>
     </div>

@@ -16,7 +16,10 @@ function Cart() {
   }
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '700px', margin: '0 auto' }}>
+    <div style={{ padding: '2.5rem 2rem', maxWidth: '700px', margin: '0 auto' }}>
+      <p className="price-tag" style={{ color: 'var(--cherry)', fontSize: '0.75rem', marginBottom: '0.3rem' }}>
+        REVIEW & CONFIRM
+      </p>
       <h2 style={{ marginBottom: '1.5rem' }}>Your Cart</h2>
 
       {cartItems.map((item) => (

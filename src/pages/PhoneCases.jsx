@@ -24,12 +24,23 @@ function PhoneCases() {
   }
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2 style={{ marginBottom: '0.5rem' }}>Phone Cases</h2>
-      <p style={{ color: '#666', marginBottom: '1.5rem' }}>
-        Find the perfect case for your phone model
-      </p>
+    <div>
+      <div style={{
+        backgroundColor: 'var(--ink)',
+        color: '#fff',
+        padding: '2.2rem 2rem',
+        borderBottom: '3px solid var(--marigold)'
+      }}>
+        <p className="price-tag" style={{ color: 'var(--marigold)', fontSize: '0.75rem', marginBottom: '0.4rem' }}>
+          ACCESSORIES
+        </p>
+        <h2 style={{ fontSize: '1.8rem' }}>Phone Cases</h2>
+        <p style={{ color: '#c9d2db', marginTop: '0.4rem' }}>
+          Find the perfect case for your phone model
+        </p>
+      </div>
 
+      <div style={{ padding: '2rem' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
         <select
           value={selectedModel}
@@ -67,6 +78,7 @@ function PhoneCases() {
           ))}
         </div>
       )}
+    </div>
     </div>
   )
 }

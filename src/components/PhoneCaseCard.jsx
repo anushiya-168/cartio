@@ -12,14 +12,15 @@ function PhoneCaseCard({ item, onAddToCart }) {
   }
 
   return (
-    <div style={{
+    <div className="hover-card" style={{
       position: 'relative',
       border: '2px solid var(--ink)',
       borderRadius: '6px',
       padding: '1.2rem 1rem 1rem',
       backgroundColor: 'var(--paper-alt)',
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      boxShadow: '0 3px 10px rgba(27,36,48,0.06)'
     }}>
       <div style={{
         position: 'absolute',
@@ -76,6 +77,7 @@ function PhoneCaseCard({ item, onAddToCart }) {
 
       <button
         onClick={handleAdd}
+        className={added ? '' : 'hover-btn'}
         style={{
           padding: '0.6rem',
           backgroundColor: added ? '#2d6a4f' : 'var(--ink)',

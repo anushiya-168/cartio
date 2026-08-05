@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getAllProducts, getCategories } from '../services/api'
 import ProductCard from '../components/ProductCard'
+import Hero from '../components/Hero'
 
 function Home() {
   const [products, setProducts] = useState([])
@@ -42,7 +43,9 @@ function Home() {
   if (error) return <p style={{ textAlign: 'center', marginTop: '2rem', color: 'red' }}>{error}</p>
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div>
+      <Hero />
+      <div id="product-grid" style={{ padding: '2.5 rem 2rem' }} >
       <h2 style={{ marginBottom: '0.3rem', fontSize: '1.6rem' }}>Our Products</h2>
       <p className="price-tag" style={{ fontSize: '0.75rem', color: 'var(--cherry)', marginBottom: '1.5rem' }}>
         {filteredProducts.length} ITEMS IN STOCK
@@ -56,7 +59,8 @@ function Home() {
         padding: '1rem',
         backgroundColor: 'var(--paper-alt)',
         border: '2px solid var(--ink)',
-        borderRadius: '6px'
+        borderRadius: '6px',
+        boxShadow: '0 4px 14px rgba(27,36,48,0.08)'
       }}>
         <input
           type="text"
@@ -100,6 +104,7 @@ function Home() {
           ))}
         </div>
       )}
+    </div>
     </div>
   )
 }
