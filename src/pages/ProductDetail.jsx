@@ -53,7 +53,7 @@ function ProductDetail() {
         <h2>{product.title}</h2>
         <p style={{ color: '#666', margin: '1rem 0' }}>{product.description}</p>
         <p style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: '1rem 0' }}>
-          ${product.price}
+          ₹{product.price}
         </p>
         <p style={{ marginBottom: '1rem' }}>
           ⭐ {product.rating?.rate} ({product.rating?.count} reviews)

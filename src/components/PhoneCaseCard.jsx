@@ -51,7 +51,7 @@ function PhoneCaseCard({ item, onAddToCart }) {
         {item.title}
       </h3>
       <p style={{ fontSize: '0.8rem', color: '#5a6472', marginBottom: '0.5rem' }}>Fits: {item.model}</p>
-      <p className="price-tag" style={{ fontSize: '1rem', marginBottom: '0.75rem' }}>${item.price}</p>
+      <p className="price-tag" style={{ fontSize: '1rem', marginBottom: '0.75rem' }}>₹{item.price}</p>
 
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.9rem' }}>
         {item.colors.map((color) => (

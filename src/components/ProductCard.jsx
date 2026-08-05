@@ -41,7 +41,7 @@ function ProductCard({ product }) {
       </h3>
 
       <p className="price-tag" style={{ fontSize: '1.1rem', marginBottom: '0.75rem' }}>
-        ${product.price}
+        ₹{product.price}
       </p>
 
       {/* perforation line */}

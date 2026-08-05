@@ -96,7 +96,7 @@ function Checkout() {
         </div>
 
         <p style={{ fontWeight: 'bold', marginBottom: '1rem' }}>
-          Order Total: ${cartTotal.toFixed(2)}
+          Order Total: ₹{cartTotal.toFixed(2)}
         </p>
 
         <button

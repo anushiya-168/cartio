@@ -36,12 +36,12 @@ function Cart() {
             <p style={{ fontSize: '0.9rem', marginBottom: '0.25rem' }}>
               {item.title.length > 35 ? item.title.slice(0, 35) + '...' : item.title}
             </p>
-            <p style={{ fontWeight: 'bold' }}>${item.price}</p>
+            <p style={{ fontWeight: 'bold' }}>₹{item.price}</p>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <button onClick={() => updateQuantity(item.id, item.quantity - 1)} style={qtyBtnStyle}>−</button>
-            <span>{item.quantity}</span>
+            <span className="price-tag" style={{ minWidth: '20px', textAlign: 'center' }}>{item.quantity}</span>
             <button onClick={() => updateQuantity(item.id, item.quantity + 1)} style={qtyBtnStyle}>+</button>
           </div>
 
@@ -67,7 +67,7 @@ function Cart() {
         paddingTop: '1.5rem'
       }}>
         <p className="price-tag" style={{ fontSize: '1.4rem', marginBottom: '1rem' }}>
-          TOTAL: ${cartTotal.toFixed(2)}
+          TOTAL:₹{cartTotal.toFixed(2)}
         </p>
         <Link
           to="/checkout"
@@ -91,10 +91,17 @@ function Cart() {
 const qtyBtnStyle = {
   width: '28px',
   height: '28px',
-  border: '1px solid #ccc',
-  background: '#fff',
+  border: '2px solid var(--ink)',
+  background: 'var(--paper-alt)',
+  color: 'var(--ink)',
   cursor: 'pointer',
-  borderRadius: '4px'
+  borderRadius: '4px',
+  fontFamily: 'var(--font-mono)',
+  fontSize: '1rem',
+  fontWeight: 'bold',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: 'background-color 0.15s'
 }
-
 export default Cart
