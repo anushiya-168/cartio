@@ -60,19 +60,25 @@ function Cart() {
         </div>
       ))}
 
-      <div style={{ marginTop: '1.5rem', textAlign: 'right' }}>
-        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '1rem' }}>
-          Total: ${cartTotal.toFixed(2)}
+      <div style={{
+        marginTop: '1.5rem',
+        textAlign: 'right',
+        borderTop: '2px dashed var(--line)',
+        paddingTop: '1.5rem'
+      }}>
+        <p className="price-tag" style={{ fontSize: '1.4rem', marginBottom: '1rem' }}>
+          TOTAL: ${cartTotal.toFixed(2)}
         </p>
         <Link
           to="/checkout"
           style={{
             display: 'inline-block',
             padding: '0.75rem 1.5rem',
-            backgroundColor: '#1a1a1a',
+            backgroundColor: 'var(--ink)',
             color: '#fff',
             textDecoration: 'none',
-            borderRadius: '4px'
+            borderRadius: '4px',
+            border: '2px solid var(--marigold)'
           }}
         >
           Proceed to Checkout

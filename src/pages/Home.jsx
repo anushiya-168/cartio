@@ -43,28 +43,34 @@ function Home() {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h2 style={{ marginBottom: '1.5rem' }}>Our Products</h2>
+      <h2 style={{ marginBottom: '0.3rem', fontSize: '1.6rem' }}>Our Products</h2>
+      <p className="price-tag" style={{ fontSize: '0.75rem', color: 'var(--cherry)', marginBottom: '1.5rem' }}>
+        {filteredProducts.length} ITEMS IN STOCK
+      </p>
 
       <div style={{
         display: 'flex',
         flexWrap: 'wrap',
         gap: '1rem',
-        marginBottom: '2rem'
+        marginBottom: '2rem',
+        padding: '1rem',
+        backgroundColor: 'var(--paper-alt)',
+        border: '2px solid var(--ink)',
+        borderRadius: '6px'
       }}>
         <input
           type="text"
           placeholder="Search products..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ padding: '0.6rem', border: '1px solid #ccc', borderRadius: '4px', flex: '1 1 200px' }}
+          style={{ padding: '0.6rem', border: '1px solid var(--line)', borderRadius: '4px', flex: '1 1 200px', fontFamily: 'var(--font-body)' }}
         />
 
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          style={{ padding: '0.6rem', border: '1px solid #ccc', borderRadius: '4px' }}
-        >
-          <option value="all">All Categories</option>
+          style={{ padding: '0.6rem', border: '1px solid var(--line)', borderRadius: '4px', fontFamily: 'var(--font-body)' }}
+        >          <option value="all">All Categories</option>
           {categories.map((cat) => (
             <option key={cat} value={cat}>{cat}</option>
           ))}
