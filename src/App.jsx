@@ -7,6 +7,7 @@ import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
 import PhoneCases from './pages/PhoneCases'
+import PhoneCaseDetail from './pages/PhoneCaseDetail'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/phone-cases" element={<PhoneCases />} />
+          <Route path="/phone-case/:id" element={<PhoneCaseDetail />} />
         </Routes>
         <Footer />
       </BrowserRouter>

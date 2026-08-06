@@ -5,13 +5,16 @@ function Navbar() {
   const { cartCount } = useCart()
 
   return (
-    <nav style={{
+    <nav className="navbar" style={{
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: '1.1rem 2rem',
       backgroundColor: 'var(--ink)',
-      borderBottom: '3px solid var(--marigold)'
+      borderBottom: '3px solid var(--marigold)',
+      position: 'sticky',
+      top: 0,
+      zIndex: 100
     }}>
       <Link to="/" style={{
         color: '#fff',
