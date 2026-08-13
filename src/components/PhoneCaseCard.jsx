@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom'
 import { typeImages } from '../services/phoneCaseData'
+import { useWishlist } from '../context/WishlistContext'
 
 function PhoneCaseCard({ item }) {
+  const { toggleWishlist, isWishlisted } = useWishlist()
+  const liked = isWishlisted(item.id)
+
   return (
     <div className="hover-card" style={{
       position: 'relative',
@@ -13,9 +17,33 @@ function PhoneCaseCard({ item }) {
       flexDirection: 'column',
       boxShadow: '0 3px 10px rgba(27, 36, 48, 0.06)'
     }}>
+      <button
+        onClick={() => toggleWishlist(item.id)}
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          background: 'rgba(255,255,255,0.9)',
+          border: 'none',
+          borderRadius: '50%',
+          width: '30px',
+          height: '30px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          zIndex: 2
+        }}
+        aria-label="Toggle wishlist"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill={liked ? 'var(--cherry)' : 'none'} stroke="var(--cherry)" strokeWidth="2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+      </button>
+
       <span className="price-tag" style={{
         position: 'absolute',
-        top: '10px',
+        top: '48px',
         right: '10px',
         fontSize: '0.6rem',
         color: 'var(--cherry)',
@@ -27,14 +55,12 @@ function PhoneCaseCard({ item }) {
         {item.type}
       </span>
 
-      <Link to={`/phone-case/${item.id}`}>
-        <img
-          src={typeImages[item.type]}
-          alt={item.type}
-          style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', margin: '0.5rem 0 1rem', cursor: 'pointer' }}
-        />
-      </Link>
-      
+      <img
+        src={typeImages[item.type]}
+        alt={item.type}
+        style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', margin: '0.5rem 0 1rem' }}
+      />
+
       <h3 style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.3rem' }}>
         {item.title}
       </h3>
