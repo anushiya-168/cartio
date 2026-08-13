@@ -11,10 +11,18 @@ export function CartProvider({ children }) {
     const stored = localStorage.getItem('cart')
     return stored ? JSON.parse(stored) : []
   })
+  const [toast, setToast] = useState(null)
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartItems))
   }, [cartItems])
+
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 2200)
+      return () => clearTimeout(timer)
+    }
+  }, [toast])
 
   const addToCart = (product) => {
     setCartItems((prev) => {
@@ -25,6 +33,17 @@ export function CartProvider({ children }) {
         )
       }
       return [...prev, { ...product, quantity: 1 }]
+    })
+
+    setCartItems((prev) => {
+      const updatedItem = prev.find((item) => item.id === product.id)
+      const totalCount = prev.reduce((sum, item) => sum + item.quantity, 0)
+      setToast({
+        title: product.title,
+        quantityOfThisItem: updatedItem ? updatedItem.quantity : 1,
+        totalCount: totalCount
+      })
+      return prev
     })
   }
 
@@ -51,7 +70,8 @@ export function CartProvider({ children }) {
     updateQuantity,
     clearCart,
     cartTotal,
-    cartCount
+    cartCount,
+    toast
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

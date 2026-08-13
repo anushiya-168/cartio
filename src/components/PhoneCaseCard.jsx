@@ -27,12 +27,14 @@ function PhoneCaseCard({ item }) {
         {item.type}
       </span>
 
-      <img
-        src={typeImages[item.type]}
-        alt={item.type}
-        style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', margin: '0.5rem 0 1rem' }}
-      />
-
+      <Link to={`/phone-case/${item.id}`}>
+        <img
+          src={typeImages[item.type]}
+          alt={item.type}
+          style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', margin: '0.5rem 0 1rem', cursor: 'pointer' }}
+        />
+      </Link>
+      
       <h3 style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.3rem' }}>
         {item.title}
       </h3>

@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link , useNavigate} from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 
 function Cart() {
+  const navigate = useNavigate()
   const { cartItems, removeFromCart, updateQuantity, cartTotal } = useCart()
 
   if (cartItems.length === 0) {
@@ -15,13 +16,19 @@ function Cart() {
     )
   }
 
-  return (
+ return (
     <div style={{ padding: '2.5rem 2rem', maxWidth: '700px', margin: '0 auto' }}>
+      <button
+        onClick={() => navigate(-1)}
+        style={{ background: 'none', border: 'none', color: 'var(--ink)', cursor: 'pointer', fontSize: '0.9rem', marginBottom: '1rem', padding: 0 }}
+      >
+        ← Back
+      </button>
+
       <p className="price-tag" style={{ color: 'var(--cherry)', fontSize: '0.75rem', marginBottom: '0.3rem' }}>
         REVIEW & CONFIRM
       </p>
       <h2 style={{ marginBottom: '1.5rem' }}>Your Cart</h2>
-
       {cartItems.map((item) => (
         <div
           key={item.id}
