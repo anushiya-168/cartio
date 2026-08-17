@@ -118,7 +118,7 @@ function PhoneCaseDetail() {
         ← Back
       </button>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem' }}>
+      <div className="detail-layout" style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem' }}>
         <div style={{ position: 'relative', flex: '1 1 250px' }}>
           <img
             src={typeImages[item.type]}

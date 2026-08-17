@@ -83,7 +83,7 @@ function Admin() {
       ) : orders.length === 0 ? (
         <p>No orders yet.</p>
       ) : (
-        <div style={{ overflowX: 'auto' }}>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', border: '1px solid var(--line)', borderRadius: '8px' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
             <thead>
               <tr style={{ backgroundColor: 'var(--ink)', color: '#fff', textAlign: 'left' }}>

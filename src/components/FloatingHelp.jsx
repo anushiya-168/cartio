@@ -10,7 +10,7 @@ function FloatingHelp() {
   }
 
   return (
-    <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 200 }}>
+    <div style={{ position: 'fixed', bottom: '16px', right: '16px', zIndex: 200 }}>
       {open && (
         <div style={{
           position: 'absolute',
@@ -20,7 +20,7 @@ function FloatingHelp() {
           border: '2px solid var(--ink)',
           borderRadius: '10px',
           padding: '1rem',
-          width: '220px',
+          width: 'min(220px, 78vw)',
           boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
         }}>
           <p style={{ fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.4rem' }}>Need help?</p>
