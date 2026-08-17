@@ -3,10 +3,16 @@ import { phoneModels, phoneCases } from '../services/phoneCaseData'
 import PhoneCaseCard from '../components/PhoneCaseCard'
 import TrustBar from '../components/TrustBar'
 import CategoryShortcuts from '../components/CategoryShortcuts'
+import { getProductImageMap } from '../services/productImages'
 
 function PhoneCases() {
   const [selectedModel, setSelectedModel] = useState('all')
   const [selectedType, setSelectedType] = useState('all')
+  const [customImages, setCustomImages] = useState({})
+
+  useEffect(() => {
+    getProductImageMap().then(setCustomImages)
+  }, [])
 
   const caseTypes = ['Silicone', 'Leather', 'Clear', 'Shockproof']
 
@@ -71,7 +77,7 @@ function PhoneCases() {
           marginBottom: '3rem'
         }}>
           {featuredCases.map((item) => (
-            <PhoneCaseCard key={item.id} item={item} />
+            <PhoneCaseCard key={item.id} item={item} customImage={customImages[item.id]} />
           ))}
         </div>
       </div>
@@ -127,7 +133,7 @@ function PhoneCases() {
             gap: '1.5rem'
           }}>
             {filteredCases.map((item) => (
-              <PhoneCaseCard key={item.id} item={item} />
+              <PhoneCaseCard key={item.id} item={item} customImage={customImages[item.id]} />
             ))}
           </div>
         )}

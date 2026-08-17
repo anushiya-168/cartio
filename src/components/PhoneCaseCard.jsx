@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { typeImages } from '../services/phoneCaseData'
 import { useWishlist } from '../context/WishlistContext'
 
-function PhoneCaseCard({ item }) {
+function PhoneCaseCard({ item, customImage }) {
   const { isWishlisted, toggleWishlist } = useWishlist()
   const liked = isWishlisted(item.id)
 
@@ -26,8 +26,8 @@ function PhoneCaseCard({ item }) {
             overflow: 'hidden',
             backgroundColor: 'var(--paper)'
           }}>
-            <img
-              src={typeImages[item.type]}
+           <img
+              src={customImage || typeImages[item.type]}
               alt={item.type}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
