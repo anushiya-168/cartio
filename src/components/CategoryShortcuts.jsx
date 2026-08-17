@@ -13,18 +13,19 @@ function CategoryShortcuts({ onSelect, selectedType }) {
           key={cat.type}
           onClick={() => onSelect(selectedType === cat.type ? 'all' : cat.type)}
           style={{
-            padding: '0.6rem 1.1rem',
-            borderRadius: '20px',
-            border: selectedType === cat.type ? '2px solid var(--ink)' : '2px solid var(--line)',
+            padding: '0.55rem 1.1rem',
+            borderRadius: '24px',
+            border: selectedType === cat.type ? '2px solid var(--ink)' : '1px solid var(--line)',
             backgroundColor: selectedType === cat.type ? 'var(--ink)' : 'var(--paper-alt)',
             color: selectedType === cat.type ? '#fff' : 'var(--ink)',
             cursor: 'pointer',
-            fontSize: '0.85rem',
+            fontSize: '0.82rem',
             fontWeight: 600,
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            transition: 'all 0.15s ease'
+            transition: 'all 0.15s ease',
+            boxShadow: selectedType === cat.type ? '0 3px 10px rgba(27,36,48,0.2)' : 'none'
           }}
         >
           <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: cat.color, display: 'inline-block' }} />

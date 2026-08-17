@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import emailjs from '@emailjs/browser'
 import { storeUpiId, storeUpiName, storeQrImage } from '../services/storeConfig'
+import { supabase } from '../services/supabaseClient'
 
 function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart()
@@ -13,6 +14,7 @@ function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState('')
   const [placed, setPlaced] = useState(false)
   const [sending, setSending] = useState(false)
+  const [paymentConfirmed, setPaymentConfirmed] = useState(false)
 
   const codSurcharge = cartItems.reduce((sum, item) => sum + item.quantity * 10, 0)
   const finalTotal = paymentMethod === 'cod' ? cartTotal + codSurcharge : cartTotal
@@ -69,6 +71,7 @@ function Checkout() {
 
   const chooseMethod = (method) => {
     setPaymentMethod(method)
+    setPaymentConfirmed(false)
     if (method === 'upi') {
       setStep('payment')
     } else {
@@ -76,8 +79,31 @@ function Checkout() {
     }
   }
 
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = async () => {
     setSending(true)
+
+    const itemsSummary = cartItems.map((item) => item.title + ' x' + item.quantity).join(', ')
+
+    try {
+      const { error } = await supabase.from('Orders').insert([
+        {
+          customer_name: form.name,
+          mobile: form.mobile,
+          email: form.email,
+          address: form.address,
+          pincode: form.pincode,
+          items: itemsSummary,
+          payment_method: paymentMethod === 'cod' ? 'Cash on Delivery' : 'UPI',
+          total_amount: finalTotal,
+          status: 'Pending'
+        }
+      ])
+      if (error) {
+        console.error('Error saving order to database:', error)
+      }
+    } catch (err) {
+      console.error('Unexpected error saving order:', err)
+    }
 
     const whatsappLinkForOwner = buildCustomerWhatsappLink()
     const itemLines = cartItems.map((item) => item.title + ' x' + item.quantity).join(', ')
@@ -151,9 +177,7 @@ function Checkout() {
   if (step === 'payment') {
     return (
       <div style={{ padding: '2rem', maxWidth: '500px', margin: '0 auto', textAlign: 'center' }}>
-        <p className="price-tag" style={{ color: 'var(--cherry)', fontSize: '0.75rem', marginBottom: '0.3rem' }}>
-          STEP 3 OF 3
-        </p>
+        <StepTracker current={3} />
         <h2 style={{ marginBottom: '0.5rem' }}>Pay via UPI</h2>
         <p style={{ color: '#666', marginBottom: '1.5rem' }}>
           Scan the QR code or pay to the UPI ID below, then confirm your payment.
@@ -171,9 +195,39 @@ function Checkout() {
           Amount to Pay: Rs.{finalTotal.toFixed(2)}
         </p>
 
+        <div style={{
+          textAlign: 'left',
+          backgroundColor: '#fff8e6',
+          border: '1px solid var(--marigold)',
+          borderRadius: '6px',
+          padding: '0.9rem 1rem',
+          marginBottom: '1.2rem',
+          fontSize: '0.8rem'
+        }}>
+          Please complete the payment above before checking the box below. Orders confirmed without actual payment will be cancelled and not shipped.
+        </div>
+
+        <label style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: '0.6rem',
+          textAlign: 'left',
+          marginBottom: '1.2rem',
+          fontSize: '0.85rem',
+          cursor: 'pointer'
+        }}>
+          <input
+            type="checkbox"
+            checked={paymentConfirmed}
+            onChange={(e) => setPaymentConfirmed(e.target.checked)}
+            style={{ marginTop: '0.2rem' }}
+          />
+          <span>I confirm I have completed the payment of Rs.{finalTotal.toFixed(2)} to the UPI ID above.</span>
+        </label>
+
         <button
           onClick={handleConfirmOrder}
-          disabled={sending}
+          disabled={sending || !paymentConfirmed}
           style={{
             width: '100%',
             padding: '0.75rem',
@@ -181,13 +235,13 @@ function Checkout() {
             color: '#fff',
             border: 'none',
             borderRadius: '4px',
-            cursor: sending ? 'not-allowed' : 'pointer',
+            cursor: (sending || !paymentConfirmed) ? 'not-allowed' : 'pointer',
             fontSize: '1rem',
-            opacity: sending ? 0.7 : 1,
+            opacity: (sending || !paymentConfirmed) ? 0.5 : 1,
             marginBottom: '0.8rem'
           }}
         >
-          {sending ? 'Confirming...' : "I've Paid - Confirm Order"}
+          {sending ? 'Confirming...' : 'Confirm Order'}
         </button>
 
         <p>
@@ -202,9 +256,7 @@ function Checkout() {
   if (step === 'cod-confirm') {
     return (
       <div style={{ padding: '2rem', maxWidth: '500px', margin: '0 auto', textAlign: 'center' }}>
-        <p className="price-tag" style={{ color: 'var(--cherry)', fontSize: '0.75rem', marginBottom: '0.3rem' }}>
-          STEP 3 OF 3
-        </p>
+        <StepTracker current={3} />
         <h2 style={{ marginBottom: '0.5rem' }}>Cash on Delivery</h2>
         <p style={{ color: '#666', marginBottom: '1.5rem' }}>
           Pay in cash when your order arrives.
@@ -256,9 +308,7 @@ function Checkout() {
   if (step === 'method') {
     return (
       <div style={{ padding: '2rem', maxWidth: '500px', margin: '0 auto' }}>
-        <p className="price-tag" style={{ color: 'var(--cherry)', fontSize: '0.75rem', marginBottom: '0.3rem' }}>
-          STEP 2 OF 3
-        </p>
+        <StepTracker current={2} />
         <h2 style={{ marginBottom: '1.5rem' }}>Choose Payment Method</h2>
 
         <button onClick={function () { chooseMethod('upi') }} style={methodCardStyle}>
@@ -291,9 +341,7 @@ function Checkout() {
         ← Back
       </button>
 
-      <p className="price-tag" style={{ color: 'var(--cherry)', fontSize: '0.75rem', marginBottom: '0.3rem' }}>
-        STEP 1 OF 3
-      </p>
+      <StepTracker current={1} />
       <h2 style={{ marginBottom: '1.5rem' }}>Delivery Details</h2>
 
       <form onSubmit={handleDetailsSubmit}>
@@ -371,6 +419,42 @@ const labelStyle = { display: 'block', marginBottom: '0.4rem', fontWeight: '500'
 const inputStyle = { width: '100%', padding: '0.6rem', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1rem' }
 const errorStyle = { color: 'red', fontSize: '0.85rem', marginTop: '0.3rem' }
 const backLinkStyle = { background: 'none', border: 'none', color: 'var(--ink)', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem' }
-const methodCardStyle = { display: 'block', width: '100%', textAlign: 'left', padding: '1.2rem', backgroundColor: 'var(--paper-alt)', border: '2px solid var(--ink)', borderRadius: '8px', cursor: 'pointer', marginBottom: '1rem' }
+const methodCardStyle = { display: 'block', width: '100%', textAlign: 'left', padding: '1.2rem', backgroundColor: 'var(--paper-alt)', border: '1px solid var(--line)', borderRadius: '10px', cursor: 'pointer', marginBottom: '1rem', transition: 'border-color 0.15s ease, box-shadow 0.15s ease' }
+
+function StepTracker({ current }) {
+  const steps = ['Details', 'Method', 'Payment']
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '1.5rem' }}>
+      {steps.map((label, i) => {
+        const stepNum = i + 1
+        const isDone = stepNum < current
+        const isActive = stepNum === current
+        return (
+          <div key={label} style={{ display: 'flex', alignItems: 'center', flex: i < steps.length - 1 ? 1 : 'none' }}>
+            <div style={{
+              width: '26px',
+              height: '26px',
+              borderRadius: '50%',
+              backgroundColor: isDone || isActive ? 'var(--ink)' : 'var(--paper)',
+              color: isDone || isActive ? '#fff' : '#8a95a5',
+              border: isActive ? '2px solid var(--marigold)' : '1px solid var(--line)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              flexShrink: 0
+            }}>
+              {isDone ? '✓' : stepNum}
+            </div>
+            {i < steps.length - 1 && (
+              <div style={{ flex: 1, height: '2px', backgroundColor: isDone ? 'var(--ink)' : 'var(--line)', margin: '0 0.4rem' }} />
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 export default Checkout
