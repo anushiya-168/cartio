@@ -25,7 +25,7 @@ function PhoneCases() {
 
   return (
     <div>
-           <div className="hero-inner animated-hero-bg" style={{
+      <div className="hero-inner animated-hero-bg" style={{
         color: '#fff',
         padding: '3.5rem 2rem',
         position: 'relative',
@@ -48,7 +48,7 @@ function PhoneCases() {
           border: '3px dashed var(--marigold)',
           opacity: 0.35
         }} />
-        
+
         <div style={{ flex: '1 1 320px', maxWidth: '520px', position: 'relative', zIndex: 1 }}>
           <p className="price-tag" style={{ color: 'var(--marigold)', fontSize: '0.8rem', marginBottom: '0.6rem' }}>
             PHONE CASES · TAGGED & READY
