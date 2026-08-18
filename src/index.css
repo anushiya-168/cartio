@@ -119,9 +119,13 @@ button {
     font-size: 0.9rem !important;
   }
 
-  .nav-links svg {
+    .nav-links svg {
     width: 20px;
     height: 20px;
+  }
+
+  .hero-image-col {
+    display: none;
   }
 }
 @media (max-width: 400px) {
@@ -154,4 +158,21 @@ button {
     opacity: 1;
     transform: translate(-50%, 0);
   }
+
+}
+.animated-hero-bg {
+  background: linear-gradient(120deg, #14202e, #1B2430, #3a2a4d, #4d2e1f, #3a2a4d, #1B2430);
+  background-size: 300% 300%;
+  animation: gradientShift 14s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.9; }
 }
