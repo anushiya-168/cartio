@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState ,useEffect } from 'react'
 import { phoneModels, phoneCases } from '../services/phoneCaseData'
 import PhoneCaseCard from '../components/PhoneCaseCard'
 import TrustBar from '../components/TrustBar'
